@@ -60,6 +60,10 @@
   	return typist.check(Function, test);
   }
 
+  typist.is.boolean = function(test) {
+  	return typist.check(Boolean, test);
+  }
+
   // Main Stuff
 
   var checker = function(test, value, type) {
@@ -84,6 +88,10 @@
 
   typist.function = function(test) {
   	return checker(this.is.function(test), test, "Function");
+  };
+
+  typist.boolean = function(test) {
+  	return checker(this.is.boolean(test), test, "Boolean");
   };
 
   // Chaining
