@@ -4,14 +4,15 @@ var chai = require("chai");
 var expect = chai.expect;
 var type = require("../typist");
 
+var str = "str";
+var arr = [1, 2, 3];
+
 describe("Strings", function() {
   it("should check a type and return the value", function() {
-    var str = "str";
     expect(type.string(str)).to.equal(str);
   });
 
   it("should check a type and return an error", function() {
-    var arr = [1, 2, 3];
     var curry = function() {
       type.string(arr);
     }
@@ -20,8 +21,6 @@ describe("Strings", function() {
   });
 
   it("should check a type and return a boolean", function() {
-    var arr = [1, 2, 3];
-    var str = "type";
     expect(type.is.string(arr)).to.be.false;
     expect(type.is.string(str)).to.be.true;
   });
@@ -31,7 +30,7 @@ describe("Strings", function() {
       return input;
     });
     
-    expect(test("str")).to.be.eql("str");
+    expect(test(str)).to.be.eql(str);
   });
 
   it("should 'annotate' a function return error", function() {

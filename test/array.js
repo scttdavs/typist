@@ -4,14 +4,15 @@ var chai = require("chai");
 var expect = chai.expect;
 var type = require("../typist");
 
+var arr = [1, 2, 3];
+var str = "type";
+
 describe("Array", function() {
   it("should check a type and return the value", function() {
-    var arr = [1, 2, 3];
     expect(type.array(arr)).to.equal(arr);
   });
 
   it("should check a type and return an error", function() {
-    var str = "type";
     var curry = function() {
       type.array(str);
     }
@@ -20,8 +21,6 @@ describe("Array", function() {
   });
 
   it("should check a type and return a boolean", function() {
-    var arr = [1, 2, 3];
-    var str = "type";
     expect(type.is.array(arr)).to.be.true;
     expect(type.is.array(str)).to.be.false;
   });
@@ -39,9 +38,9 @@ describe("Array", function() {
       return input;
     });
     var curry = function() {
-      test("str");
+      test(str);
     }
-    
+
     expect(curry).to.throw("TypistError: Expected a return value to be of type Array");
   });
 });
