@@ -7,9 +7,9 @@ Type check function return values at run time, or type check any value any time.
 Typist creates a curried function of your type and will check against that type any time a value is returned from it. Ensure your function will always return what you expect it to.
 
 ```js
-var typist = require("typist");
+var type = require("typist");
 
-var makeArray = typist(Array, function(input) {
+var makeArray = type(Array, function(input) {
   return input.push("Foo");
 });
 
@@ -22,13 +22,13 @@ makeArray([]); // ["Foo"]
 Type check any value any time
 
 ```js
-var typist = require("typist");
+var type = require("typist");
 
-typist.is.array(["Foo"]); // true
-typist.is.string(["Bar"]); // false
+type.is.array(["Foo"]); // true
+type.is.string(["Bar"]); // false
 
-typist.array(["Foo"]); // ["Foo"]
-typist.array("Bar"); // throws TypistError
+type.array(["Foo"]); // ["Foo"]
+type.array("Bar"); // throws TypistError
 ```
 
 ## Currently Supporting

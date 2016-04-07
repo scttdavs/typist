@@ -2,18 +2,18 @@
 
 var chai = require("chai");
 var expect = chai.expect;
-var typist = require("../typist");
+var type = require("../typist");
 
 describe("Strings", function() {
   it("should check a type and return the value", function() {
     var str = "str";
-    expect(typist.string(str)).to.equal(str);
+    expect(type.string(str)).to.equal(str);
   });
 
   it("should check a type and return an error", function() {
     var arr = [1, 2, 3];
     var curry = function() {
-      typist.string(arr);
+      type.string(arr);
     }
 
     expect(curry).to.throw("TypistError: Expected variable to be of type String");
@@ -22,12 +22,12 @@ describe("Strings", function() {
   it("should check a type and return a boolean", function() {
     var arr = [1, 2, 3];
     var str = "type";
-    expect(typist.is.string(arr)).to.be.false;
-    expect(typist.is.string(str)).to.be.true;
+    expect(type.is.string(arr)).to.be.false;
+    expect(type.is.string(str)).to.be.true;
   });
 
   it("should 'annotate' a function return type", function() {
-    var test = typist(String, function(input) {
+    var test = type(String, function(input) {
       return input;
     });
     
@@ -35,7 +35,7 @@ describe("Strings", function() {
   });
 
   it("should 'annotate' a function return error", function() {
-    var test = typist(String, function(input) {
+    var test = type(String, function(input) {
       return input;
     });
     var curry = function() {
