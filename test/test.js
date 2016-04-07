@@ -46,24 +46,40 @@ describe("Basics", function() {
   });
 
   it("should type check a function and its inputs from the start", function() {
-    var makeArray = type.returns(Array).takes(Array, String, Number).definition(function(input, foo, bar) {
+    var makeArray1 = type.returns(Array).takes(Array, String, Number).definition(function(input, foo, bar) {
       input.push(foo, bar);
       return input;
     });
 
-    expect(makeArray([], "1", 2)).to.eql(["1", 2]);
+    var makeArray2 = type.takes(Array, String, Number).returns(Array).definition(function(input, foo, bar) {
+      input.push(foo, bar);
+      return input;
+    });
+
+    expect(makeArray1([], "1", 2)).to.eql(["1", 2]);
+    expect(makeArray2([], "1", 2)).to.eql(["1", 2]);
   });
 
   it("should type check a function and its inputs from the start and throw an error", function() {
-    var makeArray = type.returns(Array).takes(Array, String, Number).definition(function(input, foo, bar) {
+    var makeArray1 = type.returns(Array).takes(Array, String, Number).definition(function(input, foo, bar) {
       input.push(foo, bar);
       return input;
     });
 
-    var curry = function() {
-      makeArray([], 1, 2);
+    var makeArray2 = type.returns(Array).takes(Array, String, Number).definition(function(input, foo, bar) {
+      input.push(foo, bar);
+      return input;
+    });
+
+    var curry1 = function() {
+      makeArray1([], 1, 2);
     };
 
-    expect(curry).to.throw("TypistError: Expected " + 1 + " to be of type String");
+    var curry2 = function() {
+      makeArray2([], 1, 2);
+    };
+
+    expect(curry1).to.throw("TypistError: Expected " + 1 + " to be of type String");
+    expect(curry2).to.throw("TypistError: Expected " + 1 + " to be of type String");
   });
 });

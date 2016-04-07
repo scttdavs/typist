@@ -5,6 +5,13 @@
 }('typist', this, function () {
   'use strict';
 
+  var commonTypes = [
+  	String,
+  	Number,
+  	Function,
+  	Boolean
+  ];
+
   // Custom typist error for debugging
   var TypistError = function(message) {
   	this.message = message;
@@ -16,6 +23,14 @@
   var check = function(type, value) {
   	return (value instanceof type || typeof value === type.name.toLowerCase());
   };
+
+  var checker = function(test, value, type) {
+  	if (test) {
+  		return value;
+  	} else {
+  		throw new TypistError("TypistError: Expected variable to be of type " + type);
+  	}
+  }
 
   var typist = function(type, func) {
   	return function() {
@@ -40,7 +55,7 @@
   	return true;
   }
 
-  // "is" checks
+  // Main Stuff
 
   typist.is = {};
 
@@ -48,51 +63,20 @@
   	return Array.isArray(test);
   }
 
-  typist.is.string = function(test) {
-  	return typist.check(String, test);
-  }
-
-  typist.is.number = function(test) {
-  	return typist.check(Number, test);
-  }
-
-  typist.is.function = function(test) {
-  	return typist.check(Function, test);
-  }
-
-  typist.is.boolean = function(test) {
-  	return typist.check(Boolean, test);
-  }
-
-  // Main Stuff
-
-  var checker = function(test, value, type) {
-  	if (test) {
-  		return value;
-  	} else {
-  		throw new TypistError("TypistError: Expected variable to be of type " + type);
-  	}
-  }
-
   typist.array = function(test) {
   	return checker(this.is.array(test), test, "Array");
   };
 
-  typist.string = function(test) {
-  	return checker(this.is.string(test), test, "String");
-  };
+  commonTypes.forEach(function(type) {
+  	var name = type.name.toLowerCase();
+  	typist.is[name] = function(test) {
+  		return typist.check(type, test);
+  	};
 
-  typist.number = function(test) {
-  	return checker(this.is.number(test), test, "Number");
-  };
-
-  typist.function = function(test) {
-  	return checker(this.is.function(test), test, "Function");
-  };
-
-  typist.boolean = function(test) {
-  	return checker(this.is.boolean(test), test, "Boolean");
-  };
+  	typist[name] = function(test) {
+  		return checker(typist.is[name](test), test, type.name);
+  	};
+  });
 
   // Chaining
 
