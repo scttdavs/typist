@@ -4,7 +4,7 @@ var chai = require("chai");
 var expect = chai.expect;
 var type = require("../typist");
 
-describe("Basics", function() {
+describe("Array", function() {
   it("should check a type and return the value", function() {
     var arr = [1, 2, 3];
     expect(type.array(arr)).to.equal(arr);

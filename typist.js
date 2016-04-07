@@ -11,10 +11,16 @@
   };
   TypistError.prototype = Object.create(TypeError.prototype);
 
+  // checks a single type or list of types
+
+  var check = function(type, value) {
+  	return (value instanceof type || typeof value === type.name.toLowerCase());
+  };
+
   var typist = function(type, func) {
   	return function() {
   		var result = func.apply(this, arguments);
-  		if (result instanceof type || typeof result === type.name.toLowerCase()) {
+  		if (check(type, result)) {
   			return result;
   		} else {
   			throw new TypistError("TypistError: Expected a return value to be of type " + type.name);
@@ -22,8 +28,17 @@
   	}
   };
 
+  typist.check = check;
 
-  
+  typist.checks = function() {
+  	var args = Array.prototype.slice.call(arguments);
+  	args.forEach(function(value) {
+  		if (!typist.check(value[0], value[1])) {
+  			throw new TypistError("TypistError: Expected " + value[1] + " to be of type " + value[0].name);
+  		}
+  	});
+  	return true;
+  }
 
   // "is" checks
 
@@ -39,7 +54,7 @@
 
   // Main Stuff
 
-  var check = function(test, value, type) {
+  var checker = function(test, value, type) {
   	if (test) {
   		return value;
   	} else {
@@ -48,16 +63,12 @@
   }
 
   typist.array = function(test) {
-  	return check(this.is.array(test), test, "Array");
+  	return checker(this.is.array(test), test, "Array");
   };
 
   typist.string = function(test) {
-  	return check(this.is.string(test), test, "String");
+  	return checker(this.is.string(test), test, "String");
   };
-
-
-
-  
 
   return typist;
 }); // jshint ignore:line

@@ -31,6 +31,22 @@ type.array(["Foo"]); // ["Foo"]
 type.array("Bar"); // throws TypistError
 ```
 
+You can also type check many values, which is useful for checking all your function arguments at the top of the function.
+
+```js
+var type = require("typist");
+
+var makeArray = type(Array, function(input, foo, bar) {
+  type.checks([Array, input], [String, foo], [Number, bar]);
+  input.push(foo, bar);
+  return input;
+});
+
+makeArray([], 1, 2); // throws TypistError
+makeArray([], "1", 2); // ["1", 2]
+```
+
+
 ## Currently Supporting
 
 I'm adding more types as I have time, but currently have:
