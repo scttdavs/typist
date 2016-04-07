@@ -1,5 +1,8 @@
 # Typist
 
+[![Build Status](https://travis-ci.org/scttdavs/typist.svg?branch=master)](https://travis-ci.org/scttdavs/typist)
+[![Coverage Status](https://coveralls.io/repos/github/scttdavs/typist/badge.svg?branch=master)](https://coveralls.io/github/scttdavs/typist?branch=master)
+
 Type check function return values at run time, or type check any value any time.
 
 1. [All In One Example](#all-in-one-example)

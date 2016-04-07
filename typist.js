@@ -123,4 +123,4 @@
   };
 
   return typist;
-}); // jshint ignore:line
+});
