@@ -86,6 +86,9 @@ I'm adding more types as I have time, but currently have:
 
 - Array
 - String
+- Number
+- Function
+- Boolean
 
 ## Testing
 
