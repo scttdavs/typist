@@ -44,4 +44,26 @@ describe("Basics", function() {
 
     expect(curry).to.throw("TypistError: Expected " + 1 + " to be of type String");
   });
+
+  it("should type check a function and its inputs from the start", function() {
+    var makeArray = type.returns(Array).takes(Array, String, Number).definition(function(input, foo, bar) {
+      input.push(foo, bar);
+      return input;
+    });
+
+    expect(makeArray([], "1", 2)).to.eql(["1", 2]);
+  });
+
+  it("should type check a function and its inputs from the start and throw an error", function() {
+    var makeArray = type.returns(Array).takes(Array, String, Number).definition(function(input, foo, bar) {
+      input.push(foo, bar);
+      return input;
+    });
+
+    var curry = function() {
+      makeArray([], 1, 2);
+    };
+
+    expect(curry).to.throw("TypistError: Expected " + 1 + " to be of type String");
+  });
 });

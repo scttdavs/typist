@@ -42,6 +42,10 @@
 
   // "is" checks
 
+  var typeChecker = function(type) {
+  	return test instanceof type || typeof test === type.name.toLowerCase()
+  }
+
   typist.is = {};
 
   typist.is.array = function(test) {
@@ -49,7 +53,11 @@
   }
 
   typist.is.string = function(test) {
-  	return test instanceof String || typeof test === String.name.toLowerCase();
+  	return typeChecker(String);
+  }
+
+  typist.is.number = function(test) {
+  	return typeChecker(Number);
   }
 
   // Main Stuff
@@ -68,6 +76,50 @@
 
   typist.string = function(test) {
   	return checker(this.is.string(test), test, "String");
+  };
+
+  typist.number = function(test) {
+  	return checker(this.is.number(test), test, "Number");
+  };
+
+  // Chaining
+
+  var chaining = {
+  	returns: function(type) {
+  		this.type = type;
+  		return this;
+  	},
+  	takes: function() {
+  		var args = Array.prototype.slice.call(arguments);
+  		this.types = args;
+  		return this;
+  	},
+  	definition: function(func) {
+  		var ret = function() {
+  			var args = Array.prototype.slice.call(arguments);
+  			if (this.types) {
+  				var builtTypes = [];
+  				args.forEach(function(value, i) {
+  					builtTypes.push([this.types[i], value]);
+  				}.bind(this));
+	  			typist.checks.apply(this, builtTypes);
+	  		}
+
+  			return func.apply(this, arguments);
+  		}.bind(this);
+
+  		return this.type ? typist(this.type, ret) : ret;
+  	}
+  };
+
+  typist.returns = function() {
+  	var ret = Object.create(chaining);
+  	return ret.returns.apply(ret, arguments);
+  };
+
+  typist.takes = function() {
+  	var ret = Object.create(chaining);
+  	return ret.takes.apply(ret, arguments);
   };
 
   return typist;
