@@ -42,10 +42,6 @@
 
   // "is" checks
 
-  var typeChecker = function(type) {
-  	return test instanceof type || typeof test === type.name.toLowerCase()
-  }
-
   typist.is = {};
 
   typist.is.array = function(test) {
@@ -53,11 +49,11 @@
   }
 
   typist.is.string = function(test) {
-  	return typeChecker(String);
+  	return typist.check(String, test);
   }
 
   typist.is.number = function(test) {
-  	return typeChecker(Number);
+  	return typist.check(Number, test);
   }
 
   // Main Stuff
