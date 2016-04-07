@@ -9,7 +9,8 @@
   	String,
   	Number,
   	Function,
-  	Boolean
+  	Boolean,
+  	Array
   ];
 
   // Custom typist error for debugging
@@ -18,20 +19,22 @@
   };
   TypistError.prototype = Object.create(TypeError.prototype);
 
-  // checks a single type or list of types
-
+  // checks a single type
   var check = function(type, value) {
   	return (value instanceof type || typeof value === type.name.toLowerCase());
   };
 
+  // pass a test value and type, it checks the value and either returns it or a TypistError
   var checker = function(test, value, type) {
   	if (test) {
   		return value;
   	} else {
   		throw new TypistError("TypistError: Expected variable to be of type " + type);
   	}
-  }
+  };
 
+
+  // type check a functions return value
   var typist = function(type, func) {
   	return function() {
   		var result = func.apply(this, arguments);
@@ -43,8 +46,10 @@
   	}
   };
 
+  // checks a single type, see above
   typist.check = check;
 
+  // checks multiple types
   typist.checks = function() {
   	var args = Array.prototype.slice.call(arguments);
   	args.forEach(function(value) {
@@ -55,30 +60,29 @@
   	return true;
   }
 
-  // Main Stuff
+  // Main type checking stuff
 
   typist.is = {};
 
+  // checking arrays is different from the rest
   typist.is.array = function(test) {
   	return Array.isArray(test);
   }
 
-  typist.array = function(test) {
-  	return checker(this.is.array(test), test, "Array");
-  };
-
   commonTypes.forEach(function(type) {
   	var name = type.name.toLowerCase();
-  	typist.is[name] = function(test) {
-  		return typist.check(type, test);
-  	};
+  	if (!typist.is[name]) {
+  		typist.is[name] = function(test) {
+	  		return typist.check(type, test);
+	  	};
+  	}
 
   	typist[name] = function(test) {
   		return checker(typist.is[name](test), test, type.name);
   	};
   });
 
-  // Chaining
+  // Chaining together for all in one solution
 
   var chaining = {
   	returns: function(type) {
