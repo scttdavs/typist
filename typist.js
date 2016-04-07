@@ -56,6 +56,10 @@
   	return typist.check(Number, test);
   }
 
+  typist.is.function = function(test) {
+  	return typist.check(Function, test);
+  }
+
   // Main Stuff
 
   var checker = function(test, value, type) {
@@ -76,6 +80,10 @@
 
   typist.number = function(test) {
   	return checker(this.is.number(test), test, "Number");
+  };
+
+  typist.function = function(test) {
+  	return checker(this.is.function(test), test, "Function");
   };
 
   // Chaining
