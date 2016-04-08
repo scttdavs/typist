@@ -72,7 +72,7 @@ You can also type check many values, which is useful for checking all your funct
 ```js
 var type = require("typist");
 
-var makeArray = type(Array, function(input, foo, bar) {
+var makeArray = function(input, foo, bar) {
   type.checks([Array, input], [String, foo], [Number, bar]);
   input.push(foo, bar);
   return input;
@@ -92,6 +92,7 @@ I'm adding more types as I have time, but currently have:
 - Number
 - Function
 - Boolean
+- Date
 
 ## Testing
 

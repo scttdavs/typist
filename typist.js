@@ -10,7 +10,8 @@
   	Number,
   	Function,
   	Boolean,
-  	Array
+  	Array,
+  	Date
   ];
 
   // Custom typist error for debugging
