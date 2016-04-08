@@ -13,7 +13,8 @@
   	Array,
   	Date,
   	RegExp,
-  	Object
+  	Object,
+  	Error
   ];
 
   // Custom typist error for debugging

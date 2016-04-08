@@ -95,6 +95,7 @@ I'm adding more types as I have time, but currently have:
 - Boolean
 - Date
 - RegEpx
+- Error
 
 ## Testing
 
