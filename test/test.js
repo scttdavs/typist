@@ -83,3 +83,46 @@ describe("Basics", function() {
     expect(curry2).to.throw("TypistError: Expected " + 1 + " to be of type String");
   });
 });
+
+type.allTypes.forEach(function(value, i) {
+  var name = value.name.toLowerCase();
+  var test = new value();
+
+  describe(value.name, function() {
+    it("should check a type and return the value", function() {
+      expect(type[name](test)).to.equal(test);
+    });
+
+    it("should check a type and return an error", function() {
+      var curry = function() {
+        type[name]();
+      }
+
+      expect(curry).to.throw("TypistError: Expected variable to be of type " + value.name);
+    });
+
+    it("should check a type and return a boolean", function() {
+      expect(type.is[name]()).to.be.false;
+      expect(type.is[name](test)).to.be.true;
+    });
+
+    it("should 'annotate' a function return type", function() {
+      var temp = type(value, function(input) {
+        return input;
+      });
+      
+      expect(temp(test)).to.be.equal(test);
+    });
+
+    it("should 'annotate' a function return error", function() {
+      var test = type(value, function(input) {
+        return input;
+      });
+      var curry = function() {
+        test();
+      }
+      
+      expect(curry).to.throw("TypistError: Expected a return value to be of type " + value.name);
+    });
+  });
+});

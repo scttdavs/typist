@@ -5,18 +5,6 @@
 }('typist', this, function () {
   'use strict';
 
-  var commonTypes = [
-  	String,
-  	Number,
-  	Function,
-  	Boolean,
-  	Array,
-  	Date,
-  	RegExp,
-  	Object,
-  	Error
-  ];
-
   // Custom typist error for debugging
   var TypistError = function(message) {
   	this.message = message;
@@ -50,6 +38,18 @@
   	}
   };
 
+  typist.allTypes = [
+  	String,
+  	Number,
+  	Function,
+  	Boolean,
+  	Array,
+  	Date,
+  	RegExp,
+  	Object,
+  	Error
+  ];
+
   // checks a single type, see above
   typist.check = check;
 
@@ -73,7 +73,7 @@
   	return Array.isArray(test);
   }
 
-  commonTypes.forEach(function(type) {
+  typist.allTypes.forEach(function(type) {
   	var name = type.name.toLowerCase();
   	if (!typist.is[name]) {
   		typist.is[name] = function(test) {
