@@ -87,6 +87,7 @@ makeArray([], "1", 2); // ["1", 2]
 
 I'm adding more types as I have time, but currently have:
 
+- Object
 - Array
 - String
 - Number
