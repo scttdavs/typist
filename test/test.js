@@ -4,6 +4,18 @@ var chai = require("chai");
 var expect = chai.expect;
 var type = require("../typist");
 
+var values = {
+  error: new Error(),
+  date: new Date(),
+  object: {},
+  string: "",
+  array: [],
+  regexp: /abcd/,
+  boolean: true,
+  function: function() {},
+  number: 9
+};
+
 describe("Basics", function() {
   it("should check many types and return true", function() {
     var arr = [1, 2, 3];
@@ -86,11 +98,13 @@ describe("Basics", function() {
 
 type.allTypes.forEach(function(value, i) {
   var name = value.name.toLowerCase();
-  var test = new value();
+  var test = values[name];
+  var testCtor = new value();
 
   describe(value.name, function() {
     it("should check a type and return the value", function() {
       expect(type[name](test)).to.equal(test);
+      expect(type[name](testCtor)).to.equal(testCtor);
     });
 
     it("should check a type and return an error", function() {
@@ -104,6 +118,7 @@ type.allTypes.forEach(function(value, i) {
     it("should check a type and return a boolean", function() {
       expect(type.is[name]()).to.be.false;
       expect(type.is[name](test)).to.be.true;
+      expect(type.is[name](testCtor)).to.be.true;
     });
 
     it("should 'annotate' a function return type", function() {
@@ -112,12 +127,14 @@ type.allTypes.forEach(function(value, i) {
       });
       
       expect(temp(test)).to.be.equal(test);
+      expect(temp(testCtor)).to.be.equal(testCtor);
     });
 
     it("should 'annotate' a function return error", function() {
       var test = type(value, function(input) {
         return input;
       });
+      
       var curry = function() {
         test();
       }
