@@ -93,6 +93,7 @@ I'm adding more types as I have time, but currently have:
 - Function
 - Boolean
 - Date
+- RegEpx
 
 ## Testing
 
