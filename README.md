@@ -14,10 +14,13 @@ Type check function return values at run time, or type check any value any time.
 Seamlessly type check the return type as well as input types for the life of the function.
 
 ```js
-var makeArray = type.returns(Array).takes(Array, String, Number).definition(function(input, foo, bar) {
-  input.push(foo, bar);
-  return input;
-});
+var makeArray = type.takes(Array, String, Number)
+                    .definition(function(input, foo, bar) {
+                      input.push(foo, bar);
+                      return input;
+                    })
+                    .returns(Array)
+                    .end();
 
 makeArray([], "1", 2); // ["1", 2]
 makeArray([], 1, 2); // Throws TypistError
