@@ -3,8 +3,8 @@
 var chai = require("chai");
 var expect = chai.expect;
 var type = require("../typist");
-var MockBrowser = require('mock-browser').mocks.MockBrowser;
-var mock = new MockBrowser();
+var jsdom = require("jsdom").jsdom;
+var doc = jsdom("<html><body></body></html>");
 
 var values = {
   error: new Error(),
@@ -148,8 +148,7 @@ type.allTypes.forEach(function(value, i) {
 
 describe("Edge Cases", function() {
   it("return true for an array of iframes", function() {
-    var doc = mock.getDocument();
-    var win = mock.getWindow();
+    var win = doc.defaultView;
 
     var iframeEl = doc.createElement('iframe');
     doc.body.appendChild(iframeEl);
