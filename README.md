@@ -15,7 +15,7 @@ Seamlessly type check the return type as well as input types for the life of the
 
 ```js
 var makeArray = type.takes(Array, String, Number)
-                    .definition(function(input, foo, bar) {
+                    .def(function(input, foo, bar) {
                       input.push(foo, bar);
                       return input;
                     })
