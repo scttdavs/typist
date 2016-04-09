@@ -13,7 +13,9 @@
 
   // checks a single type
   var check = function(type, value) {
-  	return (value instanceof type || typeof value === type.name.toLowerCase());
+  	return (value instanceof type || 
+            typeof value === type.name.toLowerCase() || 
+            Object.prototype.toString.call(value) === "[object " + type.name + "]");
   };
 
   // pass a test value and type, it checks the value and either returns it or a TypistError
@@ -67,11 +69,6 @@
   // Main type checking stuff
 
   typist.is = {};
-
-  // checking arrays is different from the rest
-  typist.is.array = function(test) {
-  	return Array.isArray(test);
-  }
 
   typist.allTypes.forEach(function(type) {
   	var name = type.name.toLowerCase();

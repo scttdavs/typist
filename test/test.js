@@ -3,6 +3,8 @@
 var chai = require("chai");
 var expect = chai.expect;
 var type = require("../typist");
+var MockBrowser = require('mock-browser').mocks.MockBrowser;
+var mock = new MockBrowser();
 
 var values = {
   error: new Error(),
@@ -141,5 +143,20 @@ type.allTypes.forEach(function(value, i) {
       
       expect(curry).to.throw("TypistError: Expected a return value to be of type " + value.name);
     });
+  });
+});
+
+describe("Edge Cases", function() {
+  it("return true for an array of iframes", function() {
+    var doc = mock.getDocument();
+    var win = mock.getWindow();
+
+    var iframeEl = doc.createElement('iframe');
+    doc.body.appendChild(iframeEl);
+    var iframeArray = win.frames[win.frames.length - 1].Array;
+
+    var arr = new iframeArray(1,1,1,1);
+
+    expect(type.is.array(arr)).to.be.true;
   });
 });
