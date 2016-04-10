@@ -39,7 +39,7 @@ Or you can use the features separately but all together for the same effect.
 var type = require("typist");
 
 var makeArray = type(Array, function(input, foo, bar) {
-  type.checks([Array, input], [String, foo], [Number, bar]);
+  type.check([Array, input], [String, foo], [Number, bar]);
   input.push(foo, bar);
   return input;
 });
@@ -77,13 +77,24 @@ type.array(["Foo"]); // ["Foo"]
 type.array("Bar"); // throws TypistError
 ```
 
+That includes custom types as well:
+
+```js
+var type = require("typist");
+var Site = function() {};
+
+var github = new Site();
+type.is(Site, github); // true
+type.is(Site, []); // false
+```
+
 You can also type check many values, which is useful for checking all your function arguments at the top of the function.
 
 ```js
 var type = require("typist");
 
 var makeArray = function(input, foo, bar) {
-  type.checks([Array, input], [String, foo], [Number, bar]);
+  type.check([Array, input], [String, foo], [Number, bar]);
   input.push(foo, bar);
   return input;
 });

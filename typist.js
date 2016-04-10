@@ -52,14 +52,11 @@
   	Error
   ];
 
-  // checks a single type, see above
-  typist.check = check;
-
   // checks multiple types
-  typist.checks = function() {
+  typist.check = function() {
   	var args = Array.prototype.slice.call(arguments);
   	args.forEach(function(value) {
-  		if (!typist.check(value[0], value[1])) {
+  		if (!check(value[0], value[1])) {
   			throw new TypistError("TypistError: Expected " + value[1] + " to be of type " + value[0].name);
   		}
   	});
@@ -68,13 +65,15 @@
 
   // Main type checking stuff
 
-  typist.is = {};
+  typist.is = function(type, value) {
+    return check(type, value);
+  };
 
   typist.allTypes.forEach(function(type) {
   	var name = type.name.toLowerCase();
   	if (!typist.is[name]) {
   		typist.is[name] = function(test) {
-	  		return typist.check(type, test);
+	  		return check(type, test);
 	  	};
   	}
 
@@ -103,7 +102,7 @@
   				args.forEach(function(value, i) {
   					builtTypes.push([this.types[i], value]);
   				}.bind(this));
-	  			typist.checks.apply(this, builtTypes);
+	  			typist.check.apply(this, builtTypes);
 	  		}
 
   			return func.apply(this, arguments);
