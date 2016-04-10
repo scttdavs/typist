@@ -1,5 +1,5 @@
 {
-  "name": "typist",
+  "name": "typist.js",
   "version": "0.1.0",
   "description": "Type checking in JS",
   "main": "typist.js",
