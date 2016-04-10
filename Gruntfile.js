@@ -1,5 +1,6 @@
 module.exports = function(grunt){
   grunt.loadNpmTasks('grunt-mocha-istanbul');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.initConfig({
       mocha_istanbul: {
           test: {
@@ -20,10 +21,15 @@ module.exports = function(grunt){
               grep: grunt.option('grep') || 0
 
           }
+      },
+      uglify: {
+        my_target: {
+          files: {
+            'typist.min.js': ['typist.js']
+          }
+        }
       }
   });
-
-
 
   grunt.event.on('coverage', function(lcovFileContents, done){
       // Check below on the section "The coverage event"
