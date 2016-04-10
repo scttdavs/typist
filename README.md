@@ -5,9 +5,16 @@
 
 Type check function return values at run time, or type check any value any time.
 
+1. [Install](#install)
 1. [All In One Example](#all-in-one-example)
 1. [Return Values](#return-values)
 1. [Any Value](#any-value)
+
+## Install
+
+```
+npm install typist.js --save
+```
 
 ## All in one example
 
