@@ -60,15 +60,15 @@ describe("Basics", function() {
   });
 
   it("should type check a function and its inputs from the start", function() {
-    var makeArray1 = type.returns(Array).takes(Array, String, Number).def(function(input, foo, bar) {
+    var makeArray1 = type.returns(Array).takes(Array, String, Number).does(function(input, foo, bar) {
       input.push(foo, bar);
       return input;
-    }).end();
+    }).done();
 
-    var makeArray2 = type.takes(Array, String, Number).returns(Array).def(function(input, foo, bar) {
+    var makeArray2 = type.takes(Array, String, Number).returns(Array).does(function(input, foo, bar) {
       input.push(foo, bar);
       return input;
-    }).end();
+    }).done();
 
     expect(makeArray1([], "1", 2)).to.eql(["1", 2]);
     expect(makeArray2([], "1", 2)).to.eql(["1", 2]);
@@ -76,17 +76,17 @@ describe("Basics", function() {
 
   it("should type check a function and its inputs from the start and throw an error", function() {
     var makeArray1 = type.takes(Array, String, Number)
-                         .def(function(input, foo, bar) {
+                         .does(function(input, foo, bar) {
                             input.push(foo, bar);
                             return input;
                          })
                          .returns(Array)
-                         .end();
+                         .done();
 
-    var makeArray2 = type.returns(Array).takes(Array, String, Number).def(function(input, foo, bar) {
+    var makeArray2 = type.returns(Array).takes(Array, String, Number).does(function(input, foo, bar) {
       input.push(foo, bar);
       return input;
-    }).end();
+    }).done();
 
     var curry1 = function() {
       makeArray1([], 1, 2);

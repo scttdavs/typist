@@ -15,12 +15,12 @@ Seamlessly type check the return type as well as input types for the life of the
 
 ```js
 var makeArray = type.takes(Array, String, Number)
-                    .def(function(input, foo, bar) {
+                    .does(function(input, foo, bar) {
                       input.push(foo, bar);
                       return input;
                     })
                     .returns(Array)
-                    .end();
+                    .done();
 
 makeArray([], "1", 2); // ["1", 2]
 makeArray([], 1, 2); // Throws TypistError

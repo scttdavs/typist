@@ -95,7 +95,7 @@
   		this.types = args;
   		return this;
   	},
-  	def: function(func) {
+  	does: function(func) {
   		this.definition = function() {
   			var args = Array.prototype.slice.call(arguments);
   			if (this.types) {
@@ -111,7 +111,7 @@
 
       return this;
   	},
-    end: function() {
+    done: function() {
       return this.type ? typist(this.type, this.definition) : this.definition;
     }
   };
